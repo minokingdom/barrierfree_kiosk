@@ -46,30 +46,37 @@ const ChecklistView: React.FC<ChecklistViewProps> = ({ items, onToggle, onNext }
 
         <div className="grid grid-cols-1 gap-3 mb-12">
           {items.map((item) => (
-            <div
+            <a
               key={item.id}
-              onClick={() => {
+              href={item.linkUrl || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
                 playClickSound();
-                onToggle(item.id);
+                if (!item.completed) {
+                  onToggle(item.id);
+                }
+                // Allow default link behavior (opening new tab)
               }}
-              className={`group flex items-center p-5 rounded-2xl border-2 transition-all cursor-pointer ${item.completed
+              className={`group flex items-center p-5 rounded-2xl border-2 transition-all cursor-pointer no-underline ${item.completed
                 ? 'bg-blue-50/30 border-blue-100'
                 : 'bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg'
                 }`}
             >
-              <div className={`w-7 h-7 rounded-xl flex items-center justify-center mr-5 border-2 transition-all ${item.completed ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-200 group-hover:border-blue-400'
+              <div className={`w-7 h-7 rounded-xl flex items-center justify-center mr-5 border-2 transition-all shrink-0 ${item.completed ? 'bg-blue-600 border-blue-600 text-white' : 'border-slate-200 group-hover:border-blue-400'
                 }`}>
-                {item.completed && <i className="fa-solid fa-check text-sm"></i>}
+                {item.completed ? <i className="fa-solid fa-check text-sm"></i> : <i className="fa-solid fa-arrow-up-right-from-square text-xs text-slate-300 group-hover:text-blue-400"></i>}
               </div>
               <div className="flex-1">
-                <h3 className={`font-black text-base md:text-lg ${item.completed ? 'text-blue-900/40 line-through' : 'text-slate-800'}`}>
+                <h3 className={`font-black text-base md:text-lg flex items-center gap-2 ${item.completed ? 'text-blue-900/40' : 'text-slate-800'}`}>
                   {item.task}
+                  {!item.completed && <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">Link</span>}
                 </h3>
                 <p className={`text-xs md:text-sm font-medium ${item.completed ? 'text-blue-700/30' : 'text-slate-500'}`}>
                   {item.description}
                 </p>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
