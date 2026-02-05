@@ -247,7 +247,7 @@ const App: React.FC = () => {
         >
           {[
             { id: AppTab.GUIDE, step: 'Step 1', label: '유의사항', icon: 'fa-circle-exclamation', color: 'red' },
-            { id: AppTab.CHECKLIST, step: 'Step 2', label: '준비물', icon: 'fa-list-check' },
+            { id: AppTab.CHECKLIST, step: 'Step 2', label: '준비물 및 신청', icon: 'fa-list-check' },
             { id: AppTab.APPLY, step: 'Step 3', label: '신청/입력', icon: 'fa-paper-plane' },
             { id: AppTab.HISTORY, step: 'Final', label: '신청현황', icon: 'fa-table' }
           ].map((tab) => (
