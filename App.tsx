@@ -227,7 +227,7 @@ const App: React.FC = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-4 cursor-pointer group" onClick={() => setIsStarted(false)}>
             <div className="bg-white p-2.5 rounded-xl shadow-lg transform group-hover:scale-110 transition-transform">
-              <i className="fa-solid fa-file-invoice text-blue-700 text-xl"></i>
+              <i className="fa-solid fa-store text-blue-700 text-xl"></i>
             </div>
             <div>
               <h1 className="text-xl md:text-2xl font-black tracking-tight">스마트상점 신청 도우미(소상공인용)</h1>
