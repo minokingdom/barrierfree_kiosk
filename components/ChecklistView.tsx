@@ -30,29 +30,37 @@ const ChecklistView: React.FC<ChecklistViewProps> = ({ items, onToggle, onNext }
         </div>
 
         <div className="grid grid-cols-1 gap-3 mb-12">
-          {items.map((item) => (
-            <a
-              key={item.id}
-              href={item.linkUrl || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => playClickSound()}
-              className="group flex items-center p-5 rounded-2xl border-2 transition-all cursor-pointer no-underline bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg"
-            >
-              <div className="w-7 h-7 rounded-xl flex items-center justify-center mr-5 border-2 transition-all shrink-0 border-slate-200 group-hover:border-blue-400">
-                <i className="fa-solid fa-arrow-up-right-from-square text-xs text-slate-300 group-hover:text-blue-400"></i>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-black text-base md:text-lg flex items-center gap-2 text-slate-800">
-                  {item.task}
-                  {item.linkUrl && <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">Link</span>}
-                </h3>
-                <p className="text-xs md:text-sm font-medium text-slate-500">
-                  {item.description}
-                </p>
-              </div>
-            </a>
-          ))}
+          {items.map((item) => {
+            const isLink = !!item.linkUrl;
+            const CardTag = isLink ? 'a' : 'div';
+            const cardProps = isLink ? {
+              href: item.linkUrl,
+              target: "_blank",
+              rel: "noopener noreferrer",
+              onClick: () => playClickSound()
+            } : {};
+
+            return (
+              <CardTag
+                key={item.id}
+                {...cardProps}
+                className={`group flex items-center p-5 rounded-2xl border-2 transition-all no-underline bg-white border-slate-100 ${isLink ? 'hover:border-blue-200 hover:shadow-lg cursor-pointer' : 'cursor-default'}`}
+              >
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-5 border-2 transition-all shrink-0 bg-slate-50 border-slate-200`}>
+                  <span className="text-sm font-black text-slate-400">{item.id}</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-black text-base md:text-lg flex items-center gap-2 text-slate-800">
+                    {item.task}
+                    {isLink && <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">Link</span>}
+                  </h3>
+                  <p className="text-xs md:text-sm font-medium text-slate-500">
+                    {item.description}
+                  </p>
+                </div>
+              </CardTag>
+            );
+          })}
         </div>
 
         <div className="flex flex-col gap-4">
@@ -68,16 +76,7 @@ const ChecklistView: React.FC<ChecklistViewProps> = ({ items, onToggle, onNext }
             <i className="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
 
-          {/* Next Step Button */}
-          <button
-            onClick={() => {
-              playClickSound();
-              onNext();
-            }}
-            className="w-full py-4 rounded-xl font-bold text-lg text-slate-500 hover:text-slate-800 hover:bg-slate-50 transition-all"
-          >
-            다음 단계 (입력) 로 이동 <i className="fa-solid fa-chevron-right ml-1"></i>
-          </button>
+
         </div>
       </div>
 
